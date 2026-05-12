@@ -1,1 +1,116 @@
 @import "tailwindcss";
+
+/* Class-based dark mode: applies dark: utilities when <html> has .dark */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ─── Article prose ──────────────────────────────────────────────── */
+
+.article-body {
+  color: var(--color-zinc-700);
+  line-height: 1.8;
+}
+
+.article-body h2 {
+  @apply text-2xl font-bold text-zinc-900 mt-12 mb-4 leading-tight tracking-tight;
+}
+
+.article-body h3 {
+  @apply text-xl font-semibold text-zinc-900 mt-8 mb-3 leading-tight;
+}
+
+.article-body h4 {
+  @apply text-lg font-semibold text-zinc-800 mt-6 mb-2;
+}
+
+.article-body p {
+  @apply mb-5;
+}
+
+.article-body ul {
+  @apply list-disc list-outside pl-6 mb-5 space-y-1;
+}
+
+.article-body ol {
+  @apply list-decimal list-outside pl-6 mb-5 space-y-1;
+}
+
+.article-body li > p {
+  @apply mb-0;
+}
+
+.article-body a {
+  @apply text-zinc-900 underline underline-offset-2 decoration-zinc-300 hover:decoration-zinc-700 transition-colors;
+}
+
+.article-body strong {
+  @apply font-semibold text-zinc-900;
+}
+
+.article-body code:not(pre code) {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+  @apply text-sm bg-zinc-100 text-zinc-800 px-1.5 py-0.5 rounded;
+}
+
+.article-body pre {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+  @apply bg-zinc-950 text-zinc-100 rounded-xl p-5 overflow-x-auto mb-6 text-sm leading-relaxed;
+}
+
+.article-body pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.article-body blockquote {
+  @apply border-l-2 border-zinc-200 pl-6 text-zinc-500 italic mb-5;
+}
+
+.article-body img {
+  @apply rounded-xl w-full mb-5;
+}
+
+.article-body hr {
+  @apply border-0 border-t border-zinc-100 my-12;
+}
+
+/* ─── Dark mode overrides for article prose ─────────────────────── */
+
+.dark .article-body {
+  color: var(--color-zinc-300);
+}
+
+.dark .article-body h2,
+.dark .article-body h3,
+.dark .article-body h4 {
+  color: var(--color-zinc-100);
+}
+
+.dark .article-body strong {
+  color: var(--color-zinc-100);
+}
+
+.dark .article-body a {
+  color: var(--color-zinc-200);
+  text-decoration-color: var(--color-zinc-600);
+}
+
+.dark .article-body a:hover {
+  text-decoration-color: var(--color-zinc-400);
+}
+
+.dark .article-body code:not(pre code) {
+  background-color: var(--color-zinc-800);
+  color: var(--color-zinc-200);
+}
+
+.dark .article-body blockquote {
+  border-color: var(--color-zinc-700);
+  color: var(--color-zinc-400);
+}
+
+.dark .article-body hr {
+  border-color: var(--color-zinc-800);
+}

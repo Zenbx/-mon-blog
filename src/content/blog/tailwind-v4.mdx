@@ -1,0 +1,79 @@
+---
+title: "Tailwind CSS v4: The CSS-First Revolution"
+description: "CSS-first configuration, @theme, and the end of JavaScript config files — a practical guide to what really changes in Tailwind v4."
+pubDate: 2026-05-05
+tags: ["css", "tailwind", "frontend"]
+readingTime: 4
+featured: false
+---
+
+Tailwind CSS v4 is a major rewrite that fundamentally changes how you configure and use the framework. After a few weeks of using it on this blog, here's what really changes.
+
+## Configuration Becomes CSS
+
+The most impactful change: **no more `tailwind.config.js`**. Configuration is done directly in your main CSS file via the `@theme` directive.
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --color-brand: oklch(55% 0.2 250);
+  --spacing-18: 4.5rem;
+}
+```
+
+This is a paradigm shift. Instead of a JavaScript file that generates configuration, you declare CSS variables that automatically become Tailwind utilities.
+
+## CSS Variables as the Source of Truth
+
+Tailwind v4 is built on CSS custom properties. Every theme value is exposed as a `--color-*`, `--font-*`, `--spacing-*` variable, etc.
+
+### Concrete Advantages
+
+This approach opens up interesting possibilities:
+
+- **Dynamic theming** without JavaScript: change the theme by modifying CSS variables from any selector
+- **Consistency** between your custom CSS and Tailwind — they share exactly the same values
+- **Performance**: the generated CSS is more compact because Tailwind uses `var()` rather than duplicated values
+
+### @utility for Custom Classes
+
+You can now define custom utilities directly in CSS:
+
+```css
+@utility card {
+  @apply rounded-xl border border-zinc-100 bg-white p-6;
+}
+```
+
+## Integration with Vite
+
+Tailwind v4 is designed to work with modern build tools. The `@tailwindcss/vite` plugin replaces the classic PostCSS plugin and offers better build performance.
+
+```js
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  plugins: [tailwindcss()],
+});
+```
+
+No more separate PostCSS configuration. The Vite plugin automatically detects your files and only generates the classes actually used.
+
+## What Disappears
+
+A few changes to anticipate if you're migrating from v3:
+
+- **`content`** in the config: automatic detection replaces the manual file list
+- **`theme.extend`**: replaced by `@theme` in your CSS
+- **`@layer utilities`** for custom utilities: replaced by `@utility`
+- **The `tailwind.config.js` file**: entirely optional, even redundant for most projects
+
+## What Stays the Same
+
+Reassuringly, the utility class syntax doesn't change. `text-zinc-700`, `flex`, `gap-4`, `hover:bg-zinc-100` — all of this works exactly as before. The migration is less painful than it looks.
+
+## Conclusion
+
+Tailwind v4 is a natural evolution toward deeper integration with native CSS. For new projects, it's clearly the way to go. The fact that this blog is built with Tailwind v4 and `@tailwindcss/vite` is concrete proof that the ecosystem is mature and production-ready.

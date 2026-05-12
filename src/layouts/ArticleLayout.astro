@@ -1,0 +1,102 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ReadingProgress from '../components/ReadingProgress.jsx';
+import TableOfContents from '../components/TableOfContents.jsx';
+import TagBadge from '../components/TagBadge.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  cover?: string;
+  tags: string[];
+  readingTime?: number;
+}
+
+const { title, description, pubDate, cover, tags, readingTime } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <ReadingProgress client:load />
+
+  <div class="max-w-5xl mx-auto px-6 py-16 lg:flex lg:gap-16">
+    <!-- TOC sidebar — sticky on desktop, hidden on mobile -->
+    <aside class="hidden lg:block w-52 shrink-0">
+      <div class="sticky top-24 pt-2">
+        <TableOfContents client:load />
+      </div>
+    </aside>
+
+    <!-- Article column -->
+    <main class="flex-1 min-w-0">
+      <!-- Back link -->
+      <a
+        href={`${base}blog/`}
+        class="inline-flex items-center gap-1.5 text-sm text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors mb-10"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4" aria-hidden="true">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        All articles
+      </a>
+
+      <article>
+        <!-- Article header -->
+        <header class="mb-10 max-w-2xl">
+          <div class="flex flex-wrap gap-2 mb-5">
+            {tags.map(tag => <TagBadge tag={tag} />)}
+          </div>
+          <h1 class="text-4xl font-bold text-zinc-900 dark:text-zinc-50 leading-tight tracking-tight mb-4">
+            {title}
+          </h1>
+          <p class="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6">{description}</p>
+          <div class="flex items-center gap-3 text-sm text-zinc-400 dark:text-zinc-500 pb-8 border-b border-zinc-100 dark:border-zinc-800">
+            <time datetime={new Date(pubDate).toISOString()}>{formattedDate}</time>
+            {readingTime && (
+              <>
+                <span class="w-1 h-1 rounded-full bg-zinc-200 dark:bg-zinc-700" />
+                <span>{readingTime} min read</span>
+              </>
+            )}
+          </div>
+        </header>
+
+        {cover && (
+          <div class="mb-10 max-w-2xl">
+            <img
+              src={cover}
+              alt={title}
+              class="w-full rounded-xl aspect-video object-cover bg-zinc-100 dark:bg-zinc-800"
+            />
+          </div>
+        )}
+
+        <!-- Body -->
+        <div class="article-body max-w-2xl">
+          <slot />
+        </div>
+
+        <!-- Author card -->
+        <div class="mt-16 pt-8 border-t border-zinc-100 dark:border-zinc-800 max-w-2xl">
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-semibold text-base shrink-0">
+              J
+            </div>
+            <div>
+              <p class="font-semibold text-zinc-900 dark:text-zinc-100 text-sm">Jeff Belekotan</p>
+              <p class="text-sm text-zinc-400 dark:text-zinc-500 mt-0.5">
+                Web developer, passionate about performance and DX.
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</BaseLayout>

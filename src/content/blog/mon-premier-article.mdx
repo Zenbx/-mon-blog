@@ -1,0 +1,64 @@
+---
+title: "Why I Chose Astro for My Blog"
+description: "A deep dive into building this blog with Astro 6: performance, the islands architecture, and the day-to-day developer experience."
+pubDate: 2026-05-10
+tags: ["astro", "web", "performance"]
+readingTime: 5
+featured: true
+---
+
+After months of procrastination, the blog is finally live. And like any self-respecting developer, I spent more time choosing the stack than actually writing content. Here's why Astro won.
+
+## The Context: A Blog, Not an App
+
+A blog is fundamentally a **static content** site. It doesn't need complex client state, real-time mutations, or elaborate authentication. Yet many developers (myself included) tend to over-engineer this kind of project.
+
+Next.js, Nuxt, Remix — these frameworks are excellent for what they were designed for. But for a personal blog, they add unnecessary complexity and, most importantly, extra JavaScript shipped to the browser.
+
+## The Islands Architecture: The Real Differentiator
+
+Astro's core concept is the "islands architecture." The idea is simple but powerful: **everything is static HTML by default.** JavaScript is only loaded where it's needed, in the form of interactive "islands."
+
+### What Is an Island?
+
+An island is a React component (or Vue, Svelte, etc.) that hydrates on the client side. On this blog, I have two islands:
+
+- The reading progress bar (`ReadingProgress.jsx`)
+- The table of contents with active section tracking (`TableOfContents.jsx`)
+
+Everything else — header, footer, article cards — is HTML generated at build time, with zero JavaScript.
+
+### Client Directives
+
+Astro offers several directives to control hydration:
+
+- `client:load` — loads immediately on page load
+- `client:visible` — loads when the component enters the viewport
+- `client:idle` — loads during browser idle time
+- `client:media` — loads based on a CSS media query
+
+For the progress bar, I use `client:load` because it needs to be active from the very start of reading.
+
+## Performance in Practice
+
+The difference is measurable. With Next.js and a minimal blog, you start with 80–120 KB of compressed JavaScript just for the runtime. With Astro, an article like this one ships **zero kilobytes** of JavaScript if there are no islands.
+
+With my two React components, I'm around 45 KB — and that's only React plus the two components. No client-side router, no state management, no framework boilerplate.
+
+### Core Web Vitals
+
+The metrics speak for themselves on a well-configured Astro site:
+
+- **LCP** (Largest Contentful Paint): under 1s on a standard connection
+- **INP**: near zero because there's no massive hydration
+- **CLS**: 0 if images have defined dimensions
+
+## The Day-to-Day DX
+
+What I also love is the developer experience. `.astro` files have a clean syntax: a code block between `---`, then the template. Components are composable, hot reload is fast, and TypeScript is enabled by default.
+
+Content management via content collections is elegant. I define a Zod schema for my articles, and Astro automatically validates the frontmatter at build time. No more silent bugs with badly formatted dates or missing fields.
+
+## Conclusion
+
+For a blog or content site, Astro is the best choice I know of today. It's fast to set up, performant by default, and extensible when you need interactivity. If you're still on the fence, the official documentation is really well done — it's an excellent first step.

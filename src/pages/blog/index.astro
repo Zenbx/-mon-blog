@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const allPosts = await getCollection('blog');
+const sorted = allPosts.sort(
+  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+);
+---
+
+<BaseLayout
+  title="Articles — Jeff Belekotan"
+  description="All articles on web development, performance and modern tooling."
+>
+  <div class="max-w-5xl mx-auto px-6 py-16">
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight mb-3">Articles</h1>
+      <p class="text-zinc-500 dark:text-zinc-400">
+        {sorted.length} article{sorted.length !== 1 ? 's' : ''} on web development, performance and modern tooling.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-10">
+      {sorted.map(post => <ArticleCard post={post} />)}
+    </div>
+  </div>
+</BaseLayout>

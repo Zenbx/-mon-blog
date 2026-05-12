@@ -1,0 +1,90 @@
+---
+const base = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname;
+
+function isActive(path: string) {
+  return currentPath.startsWith(base.replace(/\/$/, '') + path);
+}
+---
+<header class="sticky top-0 z-40 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-sm border-b border-zinc-100 dark:border-zinc-800 transition-colors duration-200">
+  <nav class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a
+      href={base}
+      class="text-zinc-900 dark:text-zinc-100 font-semibold text-base tracking-tight hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors"
+    >
+      Jeff Belekotan
+    </a>
+
+    <div class="flex items-center gap-5 text-sm">
+      <a
+        href={`${base}blog/`}
+        class={`transition-colors ${isActive('/blog') ? 'text-zinc-900 dark:text-zinc-100 font-medium' : 'text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'}`}
+      >
+        Articles
+      </a>
+      <a
+        href={`${base}tags/`}
+        class={`transition-colors ${isActive('/tags') ? 'text-zinc-900 dark:text-zinc-100 font-medium' : 'text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'}`}
+      >
+        Tags
+      </a>
+      <a
+        href={`${base}about/`}
+        class={`transition-colors ${isActive('/about') ? 'text-zinc-900 dark:text-zinc-100 font-medium' : 'text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200'}`}
+      >
+        About
+      </a>
+
+      <!-- Dark mode toggle -->
+      <button
+        id="theme-toggle"
+        aria-label="Toggle dark mode"
+        class="ml-1 w-8 h-8 flex items-center justify-center rounded-md text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+      >
+        <!-- Moon — visible in light mode -->
+        <svg
+          id="icon-moon"
+          class="block dark:hidden w-[18px] h-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+        <!-- Sun — visible in dark mode -->
+        <svg
+          id="icon-sun"
+          class="hidden dark:block w-[18px] h-[18px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<script>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
