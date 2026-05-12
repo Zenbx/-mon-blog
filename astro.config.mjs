@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://jeff-belekotan.github.io',
-  base: '-mon-blog',
+  base: '-mon-blog/',
   integrations: [react(), mdx()],
   vite: {
     plugins: [tailwindcss()],
