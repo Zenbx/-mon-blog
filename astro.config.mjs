@@ -1,5 +1,10 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+import mdx from '@astrojs/mdx';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: 'https://jeff-belekotan.github.io',
+  base: '/mon-blog',          // ← nom exact de ton repo GitHub
+  integrations: [react(), tailwind(), mdx()],
+});
