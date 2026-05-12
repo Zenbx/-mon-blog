@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import ReadingProgress from '../components/ReadingProgress.jsx';
 import TableOfContents from '../components/TableOfContents.jsx';
 import TagBadge from '../components/TagBadge.astro';
+import GiscusComments from '../components/GiscusComments.astro';
 import '../styles/global.css';
 
 export interface Props {
@@ -86,9 +87,11 @@ const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
         <!-- Author card -->
         <div class="mt-16 pt-8 border-t border-zinc-100 dark:border-zinc-800 max-w-2xl">
           <div class="flex items-center gap-4">
-            <div class="w-11 h-11 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-semibold text-base shrink-0">
-              J
-            </div>
+            <img
+              src={`${base}ZenbxGhost-logo.png`}
+              alt="Jeff Belekotan"
+              class="w-11 h-11 rounded-full object-cover object-[center_65%] shrink-0"
+            />
             <div>
               <p class="font-semibold text-zinc-900 dark:text-zinc-100 text-sm">Jeff Belekotan</p>
               <p class="text-sm text-zinc-400 dark:text-zinc-500 mt-0.5">
@@ -97,6 +100,9 @@ const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
             </div>
           </div>
         </div>
+
+        <!-- Comments & Reactions -->
+        <GiscusComments />
       </article>
     </main>
   </div>

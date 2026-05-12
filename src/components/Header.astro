@@ -8,11 +8,15 @@ function isActive(path: string) {
 ---
 <header class="sticky top-0 z-40 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-sm border-b border-zinc-100 dark:border-zinc-800 transition-colors duration-200">
   <nav class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-    <a
-      href={base}
-      class="text-zinc-900 dark:text-zinc-100 font-semibold text-base tracking-tight hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors"
-    >
-      Jeff Belekotan
+    <a href={base} class="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+      <img
+        src={`${base}ZenbxGhost-logo.png`}
+        alt="Zenbx logo"
+        class="w-7 h-7 rounded-full object-cover object-[center_65%]"
+      />
+      <span class="text-zinc-900 dark:text-zinc-100 font-semibold text-base tracking-tight">
+        Jeff Belekotan
+      </span>
     </a>
 
     <div class="flex items-center gap-5 text-sm">
