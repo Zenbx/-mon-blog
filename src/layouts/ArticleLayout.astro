@@ -4,6 +4,7 @@ import ReadingProgress from '../components/ReadingProgress.jsx';
 import TableOfContents from '../components/TableOfContents.jsx';
 import TagBadge from '../components/TagBadge.astro';
 import GiscusComments from '../components/GiscusComments.astro';
+import ArticleFooter from '../components/ArticleFooter.astro';
 import '../styles/global.css';
 
 export interface Props {
@@ -83,6 +84,9 @@ const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
         <div class="article-body max-w-2xl">
           <slot />
         </div>
+
+        <!-- Article metadata footer -->
+        <ArticleFooter pubDate={pubDate} canonicalUrl={Astro.url.href} />
 
         <!-- Author card -->
         <div class="mt-16 pt-8 border-t border-zinc-100 dark:border-zinc-800 max-w-2xl">

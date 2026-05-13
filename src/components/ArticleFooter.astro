@@ -1,0 +1,48 @@
+---
+export interface Props {
+  pubDate: Date;
+  canonicalUrl: string;
+}
+
+const { pubDate, canonicalUrl } = Astro.props;
+
+const formattedDate = new Date(pubDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<div class="mt-10 mb-10 max-w-2xl rounded-xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-6 py-5">
+  <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2.5 text-sm">
+    <dt class="text-zinc-400 dark:text-zinc-500 font-medium whitespace-nowrap">Published</dt>
+    <dd class="text-zinc-700 dark:text-zinc-300">
+      <time datetime={new Date(pubDate).toISOString()}>{formattedDate}</time>
+    </dd>
+
+    <dt class="text-zinc-400 dark:text-zinc-500 font-medium whitespace-nowrap">Author</dt>
+    <dd class="text-zinc-700 dark:text-zinc-300">Belekotan II Jeff Nichoss</dd>
+
+    <dt class="text-zinc-400 dark:text-zinc-500 font-medium whitespace-nowrap">Source</dt>
+    <dd class="min-w-0">
+      <a
+        href={canonicalUrl}
+        class="text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors break-all"
+      >
+        {canonicalUrl}
+      </a>
+    </dd>
+
+    <dt class="text-zinc-400 dark:text-zinc-500 font-medium whitespace-nowrap">License</dt>
+    <dd>
+      <a
+        href="https://creativecommons.org/licenses/by/4.0/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors underline underline-offset-2 decoration-zinc-300 dark:decoration-zinc-600"
+      >
+        CC BY 4.0
+      </a>
+    </dd>
+  </dl>
+</div>
