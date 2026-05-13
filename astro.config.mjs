@@ -4,7 +4,7 @@ import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://jeff-belekotan.github.io',
+  site: 'https://zenbx.github.io',
   base: '/-mon-blog/',
   integrations: [react(), mdx()],
   vite: {
